@@ -5,6 +5,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { muiTheme } from './muiTheme';
 
 import Header from './components/Header';
+import Converter from './components/Converter';
 import Footer from './components/Footer';
 
 import './global.scss';
@@ -15,7 +16,7 @@ export default class App extends Component {
       <MuiThemeProvider muiTheme={muiTheme}>
         <div className="main">
           <Header />
-
+          <Converter />
           <Footer />
         </div>
       </MuiThemeProvider>
