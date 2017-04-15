@@ -73,7 +73,6 @@ export default class Steps extends Component {
   }
 
   handleDrop(acceptedFiles, rejectedFiles) {
-    console.log(acceptedFiles, rejectedFiles);
     this.setState({ files: acceptedFiles });
   }
 
