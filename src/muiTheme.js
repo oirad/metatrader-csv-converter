@@ -23,13 +23,13 @@ export const muiTheme = getMuiTheme({
     accent1Color: yellowA700,
     accent2Color: yellowA700,
     accent3Color: yellowA700,
-    textColor: fullWhite,
-    secondaryTextColor: (0, fade)(fullWhite, 0.7),
+    textColor: grey900,
+    secondaryTextColor: (0, fade)(grey700, 0.7),
     alternateTextColor: grey300,
     canvasColor: grey300,
-    borderColor: (0, fade)(fullWhite, 0.3),
-    disabledColor: (0, fade)(fullWhite, 0.3),
-    pickerHeaderColor: (0, fade)(fullWhite, 0.12),
-    clockCircleColor: (0, fade)(fullWhite, 0.12)
+    borderColor: (0, fade)(grey700, 0.3),
+    disabledColor: (0, fade)(grey700, 0.3),
+    pickerHeaderColor: (0, fade)(grey700, 0.12),
+    clockCircleColor: (0, fade)(grey700, 0.12)
   }
 });

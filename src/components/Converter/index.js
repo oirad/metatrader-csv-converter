@@ -5,6 +5,8 @@ import Avatar from 'material-ui/Avatar';
 import ActionInfo from 'material-ui/svg-icons/action/info';
 import ActionAssignment from 'material-ui/svg-icons/action/assignment';
 import FileDownload from 'material-ui/svg-icons/file/file-download';
+import IconButton from 'material-ui/IconButton';
+import CircularProgress from './CircularProgress';
 
 export default class Converter extends Component {
 
@@ -20,8 +22,8 @@ export default class Converter extends Component {
       return (
       	<ListItem
 					key={iterator}
-      	  leftAvatar={<Avatar icon={<ActionAssignment />} />}
-					rightIcon={<FileDownload />}
+      	  leftAvatar={<Avatar icon={<CircularProgress icon={<ActionAssignment style={{ height: '40px', width: '40px'}} />} />} backgroundColor="transparent" />}
+					rightIcon={<Avatar icon={<IconButton style={{ padding: 0, margin: 0 }}><FileDownload /></IconButton>} backgroundColor="transparent" />}
       	  primaryText={file.name}
       	/>
       );
