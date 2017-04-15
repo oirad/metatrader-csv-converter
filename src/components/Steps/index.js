@@ -73,6 +73,7 @@ export default class Steps extends Component {
   }
 
   handleDrop(acceptedFiles, rejectedFiles) {
+    console.log(acceptedFiles, rejectedFiles);
     this.setState({ files: acceptedFiles });
   }
 
@@ -98,7 +99,7 @@ export default class Steps extends Component {
             </Subheader>
             <Dropzone
               onDrop={(acceptedFiles, rejectedFiles) => this.handleDrop(acceptedFiles, rejectedFiles)}
-              accept="ext/csv, application/zip"
+              accept="text/csv, application/zip"
               className="drop-zone">
               <p className="center">
                 Click or drop here to select the source file in metatrader format.
