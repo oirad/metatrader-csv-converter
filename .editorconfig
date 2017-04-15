@@ -14,15 +14,3 @@ insert_final_newline = true
 # editorconfig-tools is unable to ignore longs strings or urls
 max_line_length = null
 indent_size = 2
-
-# Configuration for sass and scss files
-[*.{scss,sass}]
-indent_size = 4
-
-# Configuration for html files
-[*.{html}]
-indent_size = 4
-
-# Configuration for js and jsx files
-[*.{js,jsx}]
-indent_size = 2

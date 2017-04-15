@@ -1,0 +1,14 @@
+html, body, #root {
+  height: 100%;
+  .main {
+    min-height: 100%;
+  }
+}
+
+p {
+  padding: 1em;
+}
+
+.center {
+  text-align: center;
+}
