@@ -8,7 +8,7 @@ import FileDownload from 'material-ui/svg-icons/file/file-download';
 import IconButton from 'material-ui/IconButton';
 import CircularProgress from './CircularProgress';
 
-import ConvertWorker from 'worker-loader!../../utils/ConvertWorker';
+import ConvertWorker from 'worker-loader?name=convert.worker.js!../../utils/ConvertWorker';
 
 export default class Converter extends Component {
 
