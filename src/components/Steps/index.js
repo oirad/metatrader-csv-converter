@@ -144,7 +144,10 @@ export default class Steps extends Component {
                 Click or drop here to select the source file in metatrader format.
               </p>
               <p className="center">
-                The supported files are in CSV format.
+                The supported files are in Metatrader CSV format.
+              </p>
+              <p className="center">
+                You can select both CSV files directly or ZIP files containing one CSV.
               </p>
               <List>
                 {this.renderFiles()}

@@ -5,10 +5,10 @@ export default class Abstract {
    */
 	constructor() {
     if (this.constructor === Abstract) {
-      throw new TypeError("Can not construct abstract class.");
+      throw new TypeError('Can not construct abstract class.');
     }
     if (this.convert === Abstract.prototype.convert) {
-      throw new TypeError("Please implement abstract method convert.");
+      throw new TypeError('Please implement abstract method convert.');
     }
   }
 
@@ -20,7 +20,7 @@ export default class Abstract {
    * @abstract
    */
 	convert() {
-    throw new TypeError("Do not call abstract method convert from child.");
+    throw new TypeError('Do not call abstract method convert from child.');
   }
 
   /**

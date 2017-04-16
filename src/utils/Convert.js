@@ -1,5 +1,5 @@
 import JSZip from 'jszip';
-import csv from 'csv';
+import parse from 'csv-parse';
 
 import Ctrader from './converters/Ctrader';
 
@@ -85,7 +85,7 @@ export default class Convert {
    */
   parseCsv(content) {
     return new Promise((resolve, reject) => {
-      csv.parse(content, {delimiter: ';'}, (err, output) => {
+      parse(content, {delimiter: ';'}, (err, output) => {
         if (err) {
           reject(err);
         } else {
