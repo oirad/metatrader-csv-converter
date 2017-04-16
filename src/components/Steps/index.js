@@ -178,7 +178,6 @@ export default class Steps extends Component {
    */
   renderContent() {
     const {finished, stepIndex} = this.state;
-    const contentStyle = {margin: '0 16px', overflow: 'hidden'};
 
     if (finished) {
       return (
@@ -190,7 +189,7 @@ export default class Steps extends Component {
     }
 
     return (
-      <div style={contentStyle}>
+      <div className="content">
         <div>{this.getStepContent(stepIndex)}</div>
         <div style={{ marginTop: 24, marginBottom: 12, float: 'right' }}>
           <RaisedButton
@@ -208,7 +207,7 @@ export default class Steps extends Component {
     const {loading, stepIndex} = this.state;
 
     return (
-      <div style={{width: '100%', maxWidth: 700, margin: 'auto'}}>
+      <div className="steps">
         <Stepper activeStep={stepIndex}>
           <Step>
             <StepButton onClick={() => this.handleGoto(0)}>

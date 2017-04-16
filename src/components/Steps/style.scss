@@ -5,3 +5,14 @@
   border-style: dashed;
   padding: 1em;
 }
+
+.steps {
+  width: 100%;
+  max-width: 700px;
+  margin: auto;
+  padding-bottom: 75px;
+  .content {
+    margin: 0 16px;
+    overflow: hidden;
+  }
+}
