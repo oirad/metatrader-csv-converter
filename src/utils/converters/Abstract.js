@@ -29,9 +29,9 @@ export default class Abstract {
    * @param {String} data
    * @return {Promise}
    */
-  generateurl(data) {
+  generateblob(data) {
     return new Promise((resolve) => {
-      resolve(`data:text/csv;charset=utf-8,${encodeURIComponent(data)}`);
+      resolve(new Blob([data], { type: 'data:text/csv;charset=utf-8' }));
     });
   };
 
@@ -43,7 +43,7 @@ export default class Abstract {
    */
   export(data) {
     return this.convert(data)
-      .then(this.generateurl);
+      .then(this.generateblob);
   }
 
 }

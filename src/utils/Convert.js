@@ -103,8 +103,8 @@ export default class Convert {
     if (this.outputType === 'ctrader') {
       const ctrader = new Ctrader();
       ctrader.export(content)
-        .then((href) => {
-          postMessage({ type: 'done!', data: { value: 100, href } });
+        .then((blob) => {
+          postMessage({ type: 'done!', data: { value: 100, blob } });
         });
     } else {
       postMessage({ type: 'error', data: { error: 'Output type not supported' } });

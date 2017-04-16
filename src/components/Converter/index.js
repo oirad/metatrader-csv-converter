@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import FileSaver from 'file-saver';
 import { List, ListItem } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import ActionInfo from 'material-ui/svg-icons/action/info';
@@ -24,7 +25,7 @@ export default class Converter extends Component {
       results: []
     };
     this.state.files.forEach((file, index) => {
-      this.state.results.push({ value: 0, href: null });
+      this.state.results.push({ value: 0, blob: null });
     });
     this.doConversion();
 	}
@@ -67,6 +68,18 @@ export default class Converter extends Component {
   }
 
   /**
+   * Downloads a file as a blob
+   *
+   * @param {Blob} blob
+   * @param {String} name
+   */
+  downloadFile(blob, name) {
+    if (blob) {
+      FileSaver.saveAs(blob, name);
+    }
+  }
+
+  /**
    * Renders the file items
    *
    * @return {String}
@@ -75,11 +88,11 @@ export default class Converter extends Component {
     return this.state.files.map((file, iterator) => {
       return (
       	<ListItem
-          href={this.state.results[iterator].href}
+          onClick={() => { this.downloadFile(this.state.results[iterator].blob, this.getNewFilename(file)); }}
           download={this.getNewFilename(file)}
 					key={iterator}
       	  leftAvatar={<Avatar icon={<CircularProgress value={this.state.results[iterator].value || 0} icon={<ActionAssignment style={{ height: '40px', width: '40px'}} />} />} backgroundColor="transparent" size={40}/>}
-					rightIcon={<Avatar icon={<IconButton style={{ padding: 0, margin: 0 }} disabled={!this.state.results[iterator].href}><FileDownload /></IconButton>} backgroundColor="transparent" />}
+					rightIcon={<Avatar icon={<IconButton style={{ padding: 0, margin: 0 }} disabled={!this.state.results[iterator].blob}><FileDownload /></IconButton>} backgroundColor="transparent" />}
       	  primaryText={this.getNewFilename(file)}
       	/>
       );
