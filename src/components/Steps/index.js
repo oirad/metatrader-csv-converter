@@ -134,7 +134,7 @@ export default class Steps extends Component {
         return (
           <div>
             <Subheader>
-              Select a source from the list below
+              Add the Metatrader source files below
             </Subheader>
             <Dropzone
               onDrop={(acceptedFiles, rejectedFiles) => this.handleDrop(acceptedFiles, rejectedFiles)}
@@ -158,6 +158,9 @@ export default class Steps extends Component {
       case 1:
         return (
           <div>
+            <Subheader>
+              Select a target from the list below
+            </Subheader>
             <DropDownMenu value={this.state.outputType} onChange={(event, index, value) => this.setState({ outputType: value })}>
               <MenuItem value="ctrader" primaryText="cTrader" />
             </DropDownMenu>
