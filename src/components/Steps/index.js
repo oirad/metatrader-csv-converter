@@ -24,6 +24,11 @@ import './style.scss';
 
 export default class Steps extends Component {
 
+  /**
+   * Override the constructor to set initial state
+   *
+   * @param {Object} props
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -35,12 +40,21 @@ export default class Steps extends Component {
     };
   }
 
+  /**
+   * Dummy async function to display changes of steps smoother
+   *
+   * @param {Function} cb
+   */
   dummyAsync(cb) {
     this.setState({loading: true}, () => {
       this.asyncTimer = setTimeout(cb, 500);
     });
   }
 
+  /**
+   * Handles the change of step to the next
+   *
+   */
   handleNext() {
     const {stepIndex} = this.state;
     if (!this.state.loading) {
@@ -52,6 +66,10 @@ export default class Steps extends Component {
     }
   }
 
+  /**
+   * Handles the change of step to the previous
+   *
+   */
   handlePrev() {
     const {stepIndex} = this.state;
     if (!this.state.loading) {
@@ -62,6 +80,11 @@ export default class Steps extends Component {
     }
   }
 
+  /**
+   * Handles the change of step to a specific index
+   *
+   * @param {Number} stepIndex
+   */
   handleGoto(stepIndex) {
     if (!this.state.loading) {
       this.dummyAsync(() => this.setState({
@@ -72,10 +95,22 @@ export default class Steps extends Component {
     }
   }
 
+  /**
+   * Handles the upload of files
+   *
+   * @param {Array} acceptedFiles
+   * @param {Array} rejectedFiles
+   *
+   */
   handleDrop(acceptedFiles, rejectedFiles) {
     this.setState({ files: acceptedFiles });
   }
 
+  /**
+   * Renders the list of files
+   *
+   * @return {String}
+   */
   renderFiles() {
     return this.state.files.map((file, iterator) => {
       return (
@@ -88,6 +123,11 @@ export default class Steps extends Component {
     });
   }
 
+  /**
+   * Renders the contents of a Step
+   *
+   * @return {String}
+   */
   getStepContent(stepIndex) {
     switch (stepIndex) {
       case 0:
@@ -125,6 +165,11 @@ export default class Steps extends Component {
     }
   }
 
+  /**
+   * Renders the content taking care of the case in which the experience is finished
+   *
+   * @return {String}
+   */
   renderContent() {
     const {finished, stepIndex} = this.state;
     const contentStyle = {margin: '0 16px', overflow: 'hidden'};

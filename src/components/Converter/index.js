@@ -7,7 +7,8 @@ import ActionAssignment from 'material-ui/svg-icons/action/assignment';
 import FileDownload from 'material-ui/svg-icons/file/file-download';
 import IconButton from 'material-ui/IconButton';
 import CircularProgress from './CircularProgress';
-import Convert from '../../utils/Convert';
+
+import ConvertWorker from 'worker-loader!../../utils/ConvertWorker';
 
 export default class Converter extends Component {
 
@@ -25,7 +26,24 @@ export default class Converter extends Component {
 
   doConversion() {
     this.state.files.forEach((file, index) => {
-      new Convert(file, this.props.outputType, index, this);
+     	const worker = new ConvertWorker();
+
+     	worker.onmessage = (event) => {
+     	  const message = event.data;
+        if (message.type === 'error') {
+          console.log(message);
+        }
+		 		if (message.data) {
+		 			const results = this.state.results;
+		 			results[index] = message.data;
+		 			this.setState({ results });
+				}
+     	  if (message.type === 'done!') {
+     	  	worker.terminate();
+     	  }
+     	}
+
+      worker.postMessage({ type: 'start', data: { source: file, outputType: this.props.outputType } });
     });
   }
 

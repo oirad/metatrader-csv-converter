@@ -6,6 +6,9 @@ export default class Ctrader extends Abstract {
     super();
   }
 
+  /**
+   * @inheritdocs
+   */
   convert(data) {
     return new Promise((resolve, reject) => {
       let result = '';

@@ -19,7 +19,7 @@ export default class Convert {
       .then((content) => { return this.parseCsv(content); })
       .then((data) => { return this.convert(data); })
       .catch((err) => {
-        console.log(err);
+        postMessage({ type: 'error', data: { error: err.toString() } });
       });
   }
 
@@ -43,9 +43,7 @@ export default class Convert {
       });
       promise
         .then((res) => {
-          const results = this.parent.state.results;
-          results[this.index].value = 40;
-          this.parent.setState({ results });
+          postMessage({ type: 'progress', data: { value: 40 } });
           resolve(res);
         })
         .catch((err) => {
@@ -91,9 +89,7 @@ export default class Convert {
         if (err) {
           reject(err);
         } else {
-          const results = this.parent.state.results;
-          results[this.index].value = 70;
-          this.parent.setState({ results });
+          postMessage({ type: 'progress', data: { value: 70 } });
           resolve(output);
         }
       });
@@ -108,13 +104,10 @@ export default class Convert {
       const ctrader = new Ctrader();
       ctrader.export(content)
         .then((href) => {
-          const results = this.parent.state.results;
-          results[this.index].value = 100;
-          results[this.index].href = href;
-          this.parent.setState({ results });
+          postMessage({ type: 'done!', data: { value: 100, href } });
         });
     } else {
-      console.log('output type not supported');
+      postMessage({ type: 'error', data: { error: 'Output type not supported' } });
     }
   }
 
