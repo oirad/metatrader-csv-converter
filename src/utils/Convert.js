@@ -9,11 +9,9 @@ export default class Convert {
    * @param {File} source
    * @param {String} outputType
    */
-  constructor(source, outputType, index, parent) {
+  constructor(source, outputType) {
     this.source = source;
     this.outputType = outputType;
-    this.index = index;
-    this.parent = parent;
 
     this.read(source)
       .then((content) => { return this.parseCsv(content); })
