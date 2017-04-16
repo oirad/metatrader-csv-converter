@@ -12,6 +12,11 @@ import ConvertWorker from 'worker-loader!../../utils/ConvertWorker';
 
 export default class Converter extends Component {
 
+  /**
+   * Override the default constructor to set the default state
+   *
+   * @param {Object} props
+   */
   constructor(props) {
 		super(props);
 		this.state = {
@@ -24,6 +29,10 @@ export default class Converter extends Component {
     this.doConversion();
 	}
 
+  /**
+   * Launches the conversion for each file (in a separate worker process)
+   *
+   */
   doConversion() {
     this.state.files.forEach((file, index) => {
      	const worker = new ConvertWorker();
@@ -47,15 +56,31 @@ export default class Converter extends Component {
     });
   }
 
+  /**
+   * Returns the new name of the file according to the requested output type
+   *
+   * @param {File} file
+   * @return {String}
+   */
+  getNewFilename(file) {
+    return file.name.replace(/\.(csv|zip)$/, `-${this.props.outputType}.csv`);
+  }
+
+  /**
+   * Renders the file items
+   *
+   * @return {String}
+   */
   renderFiles() {
     return this.state.files.map((file, iterator) => {
       return (
       	<ListItem
           href={this.state.results[iterator].href}
+          download={this.getNewFilename(file)}
 					key={iterator}
       	  leftAvatar={<Avatar icon={<CircularProgress value={this.state.results[iterator].value || 0} icon={<ActionAssignment style={{ height: '40px', width: '40px'}} />} />} backgroundColor="transparent" size={40}/>}
 					rightIcon={<Avatar icon={<IconButton style={{ padding: 0, margin: 0 }} disabled={!this.state.results[iterator].href}><FileDownload /></IconButton>} backgroundColor="transparent" />}
-      	  primaryText={file.name}
+      	  primaryText={this.getNewFilename(file)}
       	/>
       );
     });
