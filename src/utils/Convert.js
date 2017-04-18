@@ -31,7 +31,7 @@ export default class Convert {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       const promise = new Promise((resolve, reject) => {
-        if (source.type === 'application/zip') {
+        if (/zip$/.test(source.name)) {
           reader.onload = (event) => { resolve(this.ziploaded(event)); };
           reader.readAsArrayBuffer(source);
         } else {

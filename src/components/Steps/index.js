@@ -107,14 +107,9 @@ export default class Steps extends Component {
    *
    */
   handleDrop(files) {
-    let acceptedFiles = [];
-    if (this.state.windows) {
-      acceptedFiles = files.filter((file) => {
-        return file.type.length ? acceptedTypes.indexOf(file.type) !== -1 : acceptedExtensions.indexOf(file.name.split('.').pop()) !== -1;
-      });
-    } else {
-      acceptedFiles = files;
-    }
+    const acceptedFiles = files.filter((file) => {
+      return /(zip|csv)$/.test(file.name);
+    });
     this.setState({ files: acceptedFiles });
   }
 
@@ -151,7 +146,6 @@ export default class Steps extends Component {
             </Subheader>
             <Dropzone
               onDrop={(files) => this.handleDrop(files)}
-              accept={accept}
               className="drop-zone">
               <p className="center">
                 Click or drop here to select the source file in metatrader format.
