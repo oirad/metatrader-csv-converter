@@ -22,6 +22,9 @@ import Converter from '../Converter';
 
 import './style.scss';
 
+const acceptedTypes = ['application/x-zip-compressed', 'application/zip', 'text/csv'];
+const acceptedExtensions = ['csv', 'zip'];
+
 export default class Steps extends Component {
 
   /**
@@ -36,6 +39,7 @@ export default class Steps extends Component {
       finished: false,
       stepIndex: 0,
       outputType: 'ctrader',
+      windows: navigator.platform.indexOf('Win') !== -1,
       files: []
     };
   }
@@ -102,7 +106,10 @@ export default class Steps extends Component {
    * @param {Array} rejectedFiles
    *
    */
-  handleDrop(acceptedFiles, rejectedFiles) {
+  handleDrop(files) {
+    const acceptedFiles = files.filter((file) => {
+      return /(zip|csv)$/.test(file.name);
+    });
     this.setState({ files: acceptedFiles });
   }
 
@@ -131,14 +138,14 @@ export default class Steps extends Component {
   getStepContent(stepIndex) {
     switch (stepIndex) {
       case 0:
+        const accept = this.state.windows ? '' : acceptedTypes.join(' , ');
         return (
           <div>
             <Subheader>
               Add the Metatrader source files below
             </Subheader>
             <Dropzone
-              onDrop={(acceptedFiles, rejectedFiles) => this.handleDrop(acceptedFiles, rejectedFiles)}
-              accept="text/csv, application/zip"
+              onDrop={(files) => this.handleDrop(files)}
               className="drop-zone">
               <p className="center">
                 Click or drop here to select the source file in metatrader format.
