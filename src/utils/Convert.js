@@ -2,6 +2,7 @@ import JSZip from 'jszip';
 import parse from 'csv-parse';
 
 import Ctrader from './converters/Ctrader';
+import Ninjatrader from './converters/Ninjatrader';
 
 export default class Convert {
 
@@ -101,6 +102,12 @@ export default class Convert {
     if (this.outputType === 'ctrader') {
       const ctrader = new Ctrader();
       ctrader.export(content)
+        .then((blob) => {
+          postMessage({ type: 'done!', data: { value: 100, blob } });
+        });
+    } else if (this.outputType === 'ninjatrader') {
+      const ninjatrader = new Ninjatrader();
+      ninjatrader.export(content)
         .then((blob) => {
           postMessage({ type: 'done!', data: { value: 100, blob } });
         });

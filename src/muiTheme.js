@@ -20,7 +20,7 @@ export const muiTheme = getMuiTheme({
     primary1Color: grey900,
     primary2Color: grey900,
     primary3Color: grey700,
-    accent1Color: yellowA700,
+    accent1Color: grey700,
     accent2Color: yellowA700,
     accent3Color: yellowA700,
     textColor: grey900,
