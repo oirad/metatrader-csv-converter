@@ -19,13 +19,13 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin()
   ],
   module: {
-    loaders: [{
+    rules: [{
       test: /\.(js|jsx)$/,
-      loaders: ['react-hot-loader', 'babel-loader'],
+      use: ['react-hot-loader', 'babel-loader'],
       include: path.join(__dirname, 'src')
     }, {
       test: /\.(css|scss)$/,
-      loader: ExtractTextPlugin.extract({ fallbackLoader: 'style-loader', loader: ['css-loader', 'sass-loader'], }),
+      use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: ['css-loader', 'sass-loader'], }),
     }]
   }
 };
