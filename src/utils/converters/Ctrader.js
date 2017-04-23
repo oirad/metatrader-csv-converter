@@ -21,7 +21,7 @@ export default class Ctrader extends Abstract {
           line[3],
           line[4],
           line[5],
-          line[6] || 1
+          line[6] > 0 ? line[6] : 1
         ];
         result += `${newline.join(',')}\r\n`;
       });
