@@ -13,13 +13,14 @@ export default class Abstract {
   }
 
   /**
-   * Converts the passed data to the new csv format
+   * Converts the passed line
    *
    * @param {Array} data
-   * @return {Promise}
+   * @return {String}
    * @abstract
+   * @static
    */
-	convert() {
+	static convertLine() {
     throw new TypeError('Do not call abstract method convert from child.');
   }
 
@@ -27,23 +28,11 @@ export default class Abstract {
    * Generates the output file url
    *
    * @param {String} data
-   * @return {Promise}
-   */
-  generateblob(data) {
-    return new Promise((resolve) => {
-      resolve(new Blob([data], { type: 'data:text/csv;charset=utf-8' }));
-    });
-  };
-
-  /**
-   * Main function
+   * @return {Blob}
    *
-   * @param {Array} data
-   * @return {String}
    */
-  export(data) {
-    return this.convert(data)
-      .then(this.generateblob);
-  }
+  static generateBlob(data) {
+    return new Blob([data], { type: 'data:text/csv;charset=utf-8' });
+  };
 
 }

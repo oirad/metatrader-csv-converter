@@ -2,7 +2,6 @@ var path = require('path');
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CompressionPlugin = require('compression-webpack-plugin');
-var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
   entry: [
@@ -53,5 +52,8 @@ module.exports = {
       test: /\.(css|scss)$/,
       use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: ['css-loader', 'sass-loader'], }),
     }]
+  },
+  node: {
+    fs: "empty"
   }
 };

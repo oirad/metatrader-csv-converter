@@ -1,5 +1,5 @@
 import JSZip from 'jszip';
-import parse from 'csv-parse';
+import LineNavigator from 'line-navigator';
 
 import Ctrader from './converters/Ctrader';
 import Ninjatrader from './converters/Ninjatrader';
@@ -11,46 +11,64 @@ export default class Convert {
    * @param {String} outputType
    */
   constructor(source, outputType) {
-    this.source = source;
     this.outputType = outputType;
 
-    this.read(source)
-      .then((content) => { return this.parseCsv(content); })
-      .then((data) => { return this.convert(data); })
-      .catch((err) => {
-        postMessage({ type: 'error', data: { error: err.toString() } });
-      });
+    const converter = this.getConverter();
+
+    if (/csv$/.test(source.name)) {
+      this.process(source, converter);
+    } else if (/zip$/.test(source.name)) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        this.ziploaded(event).then((data) => {
+          this.process(data, converter);
+        });
+      };
+      reader.readAsArrayBuffer(source);
+    } else {
+      postMessage({ type: 'error', data: { error: 'Filetype is not supported' } });
+    }
   }
 
   /**
-   * Reads the File and returns a promise containing its contents
-   *
    * @param {File} source
-   * @return {Promise}
+   * @param {Class} converter
    */
-  read(source) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      const promise = new Promise((resolve, reject) => {
-        if (/zip$/.test(source.name)) {
-          reader.onload = (event) => { resolve(this.ziploaded(event)); };
-          reader.readAsArrayBuffer(source);
-        } else {
-          reader.onload = (event) => { resolve(event.target.result); };
-          reader.readAsText(source);
-        }
+  process(source, converter) {
+    const navigator = new LineNavigator(source);
+    let result = '';
+
+     const linesReadHandler = (err, index, lines, isEof, progress) => {
+      if (err) {
+        throw err;
+      }
+      lines.forEach((line) => {
+        result += converter.convertLine(line.split(';'));
       });
-      promise
-        .then((res) => {
-          postMessage({ type: 'progress', data: { value: 40 } });
-          resolve(res);
-        })
-        .catch((err) => {
-          reject(err);
-        });
-    });
+      if (isEof) {
+        postMessage({ type: 'done!', data: { value: 100, blob: converter.generateBlob(result) } });
+        return;
+      }
+      postMessage({ type: 'progress', data: { value: progress } });
+      navigator.readSomeLines(index + lines.length, linesReadHandler);
+    };
+    navigator.readSomeLines(0, linesReadHandler);
   }
 
+  /**
+   * Gets the correct converter according to the outputType specified
+   *
+   * @return {Class}
+   */
+  getConverter() {
+    if (this.outputType === 'ctrader') {
+      return Ctrader;
+    } else if (this.outputType === 'ninjatrader') {
+      return Ninjatrader;
+    } else {
+      postMessage({ type: 'error', data: { error: 'Output type not supported' } });
+    }
+  }
   /**
    * Invoked once the contents of the file (if in zip format) are loaded
    *
@@ -67,7 +85,7 @@ export default class Convert {
           const file = zipcontent.file(/.*/)[0];
           file.async('string')
             .then((data) => {
-              resolve(data);
+              resolve(new File([data], file));
             })
             .catch((err) => {
               reject(err);
@@ -75,45 +93,4 @@ export default class Convert {
         });
     });
   }
-
-  /**
-   * Parses the CSV (semicolon separated)
-   *
-   * @param {String} content
-   * @return {Promise}
-   */
-  parseCsv(content) {
-    return new Promise((resolve, reject) => {
-      parse(content, {delimiter: ';'}, (err, output) => {
-        if (err) {
-          reject(err);
-        } else {
-          postMessage({ type: 'progress', data: { value: 70 } });
-          resolve(output);
-        }
-      });
-    });
-  }
-
-  /**
-   * @param {Array} content
-   */
-  convert(content) {
-    if (this.outputType === 'ctrader') {
-      const ctrader = new Ctrader();
-      ctrader.export(content)
-        .then((blob) => {
-          postMessage({ type: 'done!', data: { value: 100, blob } });
-        });
-    } else if (this.outputType === 'ninjatrader') {
-      const ninjatrader = new Ninjatrader();
-      ninjatrader.export(content)
-        .then((blob) => {
-          postMessage({ type: 'done!', data: { value: 100, blob } });
-        });
-    } else {
-      postMessage({ type: 'error', data: { error: 'Output type not supported' } });
-    }
-  }
-
 }
