@@ -43,7 +43,10 @@ export default class Convert {
         throw err;
       }
       lines.forEach((line) => {
-        result += converter.convertLine(line.split(';'));
+        const parts = line.split(';');
+        if (parts.length === 7) {
+          result += converter.convertLine(line.split(';'));
+        }
       });
       if (isEof) {
         postMessage({ type: 'done!', data: { value: 100, blob: converter.generateBlob(result) } });
