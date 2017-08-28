@@ -10,9 +10,10 @@ export default class Ninjatrader extends Abstract {
    * @inheritdocs
    */
   static convertLine(line) {
-    const hasTime = parseInt(line[1]) > 0;
+    const hasTime = line[1].length > 0;
     const dateParts = line[0].split('/');
-    const time = hasTime ? ` ${line[1].split(':').join('')}` : '';
+    const timedata = line[1].split(':').join('').length <= 4 ? line[1].split(':').join('') + '00' : line[1].split(':').join('');
+    const time = hasTime ? ` ${timedata}` : '';
     const newline = [
       `${dateParts[2]}${dateParts[1]}${dateParts[0]}${time}`,
       line[2],
