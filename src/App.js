@@ -15,9 +15,7 @@ export default class App extends Component {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div className="main">
-          <Header />
           <Steps />
-          <Footer />
         </div>
       </MuiThemeProvider>
     );
