@@ -3,6 +3,10 @@ html, body, #root {
   .main {
     min-height: 100%;
     position: relative;
+    >h2 {
+      text-align: center;
+      width: 100%;
+    }
   }
 }
 

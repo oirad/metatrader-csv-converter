@@ -10,7 +10,6 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'dist/static'),
     filename: 'bundle.js',
-    publicPath: 'https://www.backtestmarket.com/converter/static/'
   },
   plugins: [
     new webpack.DefinePlugin({

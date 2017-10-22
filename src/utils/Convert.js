@@ -3,6 +3,7 @@ import LineNavigator from 'line-navigator';
 
 import Ctrader from './converters/Ctrader';
 import Ninjatrader from './converters/Ninjatrader';
+import Multicharts from './converters/Multicharts';
 
 export default class Convert {
 
@@ -68,6 +69,8 @@ export default class Convert {
       return Ctrader;
     } else if (this.outputType === 'ninjatrader') {
       return Ninjatrader;
+    } else if (this.outputType === 'multicharts') {
+      return Multicharts;
     } else {
       postMessage({ type: 'error', data: { error: 'Output type not supported' } });
     }
@@ -93,6 +96,9 @@ export default class Convert {
             .catch((err) => {
               reject(err);
             });
+        })
+        .catch((err) => {
+          console.log(err);
         });
     });
   }

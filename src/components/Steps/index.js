@@ -171,6 +171,7 @@ export default class Steps extends Component {
             <DropDownMenu value={this.state.outputType} onChange={(event, index, value) => this.setState({ outputType: value })}>
               <MenuItem value="ctrader" primaryText="cTrader" />
               <MenuItem value="ninjatrader" primaryText="NinjaTrader" />
+              <MenuItem value="multicharts" primaryText="Multicharts" />
             </DropDownMenu>
           </div>
         );
