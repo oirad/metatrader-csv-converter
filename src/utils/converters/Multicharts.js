@@ -11,9 +11,10 @@ export default class Multicharts extends Abstract {
    */
   static convertLine(line) {
     const dateParts = line[0].split('/');
+    const timeParts = line[1].split(':');
     const newline = [
       `${dateParts[0]}/${dateParts[1]}/${dateParts[2]}`,
-      line[1],
+      `${timeParts[0]}:${dateParts[1]}`,
       line[2],
       line[3],
       line[4],
